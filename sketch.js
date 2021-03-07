@@ -117,16 +117,16 @@ function preload(){
       
       
   // I C O N S
-      sound_icon = loadImage('../img/icons/volume.svg');
-      sound_hover_icon = loadImage('../img/icons/volume-hover.svg');
-      play_icon = loadImage('../img/icons/play.svg');
-      play_hover_icon = loadImage('../img/icons/play-hover.svg');
-      pause_icon = loadImage('../img/icons/pause.svg');
-      pause_hover_icon = loadImage('../img/icons/pause-hover.svg');
-      zoom_icon = loadImage('../img/icons/zoom.svg');
-      zoom_hover_icon = loadImage('../img/icons/zoom-hover.svg');
-      arrow_up_icon = loadImage('../img/icons/arrow-up.svg');
-      arrow_down_icon = loadImage('../img/icons/arrow-down.svg');
+      sound_icon = loadImage('./freedom/img/icons/volume.svg');
+      sound_hover_icon = loadImage('./freedom/img/icons/volume-hover.svg');
+      play_icon = loadImage('./freedom/img/icons/play.svg');
+      play_hover_icon = loadImage('./freedom/img/icons/play-hover.svg');
+      pause_icon = loadImage('./freedom/img/icons/pause.svg');
+      pause_hover_icon = loadImage('./freedom/img/icons/pause-hover.svg');
+      zoom_icon = loadImage('./freedom/img/icons/zoom.svg');
+      zoom_hover_icon = loadImage('./freedom/img/icons/zoom-hover.svg');
+      arrow_up_icon = loadImage('./freedom/img/icons/arrow-up.svg');
+      arrow_down_icon = loadImage('./freedom/img/icons/arrow-down.svg');
 
 
   // I M A G E S 
