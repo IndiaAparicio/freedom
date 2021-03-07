@@ -102,18 +102,18 @@ let updateUserInfo = 'Welcome to the game';
 function preload(){
 
   // S O U N D S
-      jump_sound = loadSound('../audio/jump.mp3');
-      distancing_sound = loadSound('../audio/swoosh.mp3');
-      singleContact_sound = loadSound('../audio/swoosh.mp3');
-      hygiene_sound = loadSound('../audio/rain.mp3');
-      zoom_sound = loadSound('../audio/electricity.mp3');
-      mask_sound = loadSound('../audio/maske.mp3');
-      teleport_sound = loadSound('../audio/teleport.mp3');
-      button_sound = loadSound('../audio/button.mp3');
+      jump_sound = loadSound('./audio/jump.mp3');
+      distancing_sound = loadSound('./audio/swoosh.mp3');
+      singleContact_sound = loadSound('./audio/swoosh.mp3');
+      hygiene_sound = loadSound('./audio/rain.mp3');
+      zoom_sound = loadSound('./audio/electricity.mp3');
+      mask_sound = loadSound('./audio/maske.mp3');
+      teleport_sound = loadSound('./audio/teleport.mp3');
+      button_sound = loadSound('./audio/button.mp3');
 
-      flyingArea_sound = loadSound('../audio/gone_short_audiohub.mp3');
-      isolationArea_sound = loadSound('../audio/morning-memory-short-audiohub.mp3');
-      middleArea_sound = loadSound('../audio/middleSoundMusic.mp3');
+      flyingArea_sound = loadSound('./audio/gone_short_audiohub.mp3');
+      isolationArea_sound = loadSound('./audio/morning-memory-short-audiohub.mp3');
+      middleArea_sound = loadSound('./audio/middleSoundMusic.mp3');
       
       
   // I C O N S
