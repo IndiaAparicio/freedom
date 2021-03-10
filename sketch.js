@@ -3,13 +3,22 @@
 
 //Gameplay
 let running = false;
+let onPause = false;
+let notOnPause = true;
+let gameHasStarted = false;
 let startingPage = true;
 let explainPage = false;
+let intro_0 = true;
+let intro_1 = false; 
+let intro_2 = false;
+let intro_3 = false;
+let intro_4 = false;
+let intro_5 = false;
+let intro_6 = false;
+let intro_7 = false;
 let mouseClickCheck = true; // StartingPage
-let ending_1 = false;
-let ending_2 = false;
-let ending_3 = false;
-let ending_4 = false;
+let mouseClickCheck2 = true; // StartingPage
+
 
 
 //player
@@ -49,6 +58,24 @@ let fbS_I_b = 255; //feedback Score Individual color blue
 let fbS_C_r = 255; //feedback Score Collective color red
 let fbS_C_g = 255; //feedback Score Collective color green
 let fbS_C_b = 255; //feedback Score Collective color bliue
+let counterIconsIndividual = [];
+let counterIconsCollective = [];
+
+
+//Scoring-System
+let SS_DISTANCING_I = 10; //Boost once
+let SS_DISTANCING_C = -30; //Boost once
+let SS_MASK_C = 0.01; //every loop
+let SS_MASK_I = 0.01; //every loop
+let SS_HYGIENE_C = 20; //Boost once
+let SS_HYGIENE_I = 10; //Boost once
+let SS_ZOOM_C = 0.01; //every loop
+let SS_ZOOM_I = 0.001; //every loop times boring(1-10)
+let SS_ISOLATION_C = 0.001; //every loop times lonely(1-10)
+let SS_ISOLATION_I = 0.001; //every loop times lonely(1-10)
+let SS_FLYING_I = 0.03; //every loop
+let SS_SINGLECONTACT_C = -3; //Boost once
+let SS_SINGLECONTACT_I = 5; //Boost once
 
 
 
@@ -60,6 +87,7 @@ let EDGE_R = (SCENE_W/2)-50;
 let EDGE_L = (-(SCENE_W/2))+50;
 let EDGE_U = 0; //(-(SCENE_H/2))+50;
 let EDGE_D = SCENE_H;
+let smoothening = 0.0001;
 
 //colliders
 let ground;
@@ -71,7 +99,7 @@ let teleportArea, teleportArea1;
 let middleArea;
 
 //interactions
-let maskOn = true;
+let maskOn = false;
 let maskGroundCheck = true;
 let teleportColliderSize = 400;
 let directionSingle = 5;
@@ -96,7 +124,28 @@ let maxSpeed = 3;
 //Text Information 
 let updateUserInfo = 'Welcome to the game';
 
+let arrayCheckMask= false;
+let arrayCheckZoom= false;
+let arrayCheckZoomIndi = false;
+let arrayCheckIsolation = false;
+let arrayCheckClouds = false;
+let arrayCheckHygiene = false;
+let arrayCheckClean = false;
+let arrayCheckSinglePeople = false;
+let arrayCheckDistancing = false;
 
+
+let iconGreenZoom;
+let iconRedZoom;
+let iconGreenIsolation;
+let iconRedIsolation;
+let iconGreenRain;
+let iconRedRain;
+let iconGreenMask;
+let iconGreenDistancing;
+let iconRedDistancing;
+let iconGreenSingleContact;
+let iconGreenClouds;
 
 
 function preload(){
@@ -128,12 +177,33 @@ function preload(){
       arrow_up_icon = loadImage('../img/icons/arrow-up.svg');
       arrow_down_icon = loadImage('../img/icons/arrow-down.svg');
 
+      rain_green_icon = loadImage('../img/icons/rain-green.png');
+      rain_red_icon = loadImage('../img/icons/rain-red.png');
+      clouds_green_icon = loadImage('../img/icons/clouds-green.png');
+      isolation_green_icon = loadImage('../img/icons/isolation-green.png');
+      isolation_red_icon = loadImage('../img/icons/isolation-red.png');
+      zoom_green_icon = loadImage('../img/icons/zoom-green.png');
+      zoom_red_icon = loadImage('../img/icons/zoom-red.png');
+      mask_red_icon = loadImage('../img/icons/mask-red.png');
+      mask_green_icon = loadImage('../img/icons/mask-green.png');
+      distancing_red_icon = loadImage('../img/icons/distancing-red.png');
+      distancing_green_icon = loadImage('../img/icons/distancing-green.png');
+      singleContact_green_icon = loadImage('../img/icons/singleContact-green.png');
+
 
   // I M A G E S 
       //Startingpage
           docu_img = loadImage('../img/explain.png');
           docu_bg_img = loadImage('../img/docu_bg.png');
           docu_clouds_img = loadImage('../img/docu_clouds.png');
+
+          intro_1_img = loadImage('../img/intro/intro-1.png');
+          intro_2_img = loadImage('../img/intro/intro-2.png');
+          intro_3_img = loadImage('../img/intro/intro-3.png');
+          intro_4_img = loadImage('../img/intro/intro-4.png');
+          intro_5_img = loadImage('../img/intro/intro-5.png');
+          intro_6_img = loadImage('../img/intro/intro-6.png');
+          intro_7_img = loadImage('../img/intro/intro-7.png');
 
       //Environment
           clouds_1_img = loadImage("../img/clouds-1.png");
@@ -164,7 +234,7 @@ function preload(){
 
   //  A N I M A T I O N S
       //Player:
-          player1 = createSprite(400,1500);
+          player1 = createSprite(400,1700);
 
           player1.addAnimation('player_1_jump_animate', '../img/player/Player-SW-Jump-1.png','../img/player/Player-SW-Jump-11.png');
           player1.addAnimation('player_1_ground_animate','../img/player/Player-SW-Ground-1.png','../img/player/Player-SW-Ground-11.png');
@@ -358,6 +428,24 @@ function setup() {
               att_points[i] = new Attraction_points(random(-SCENE_W/2, SCENE_W/2), random(SCENE_H/3), random(-2,2), random(-2,2));
               createSwarm(distancing_groups[i], att_points[i].positionX, att_points[i].positionY);
             }
+
+    
+      //PIERRE
+      iconGreenZoom = new DisplayIcons_new(counterIconsCollective,zoom_green_icon,windowWidth/5 + 30,30+(windowHeight/14)+(windowHeight/120), 'GREEN ZOOM');
+      iconGreenZoom_I = new DisplayIcons_new(counterIconsIndividual,zoom_green_icon,windowWidth/5 + 30,20, 'GREEN ZOOM');
+      iconRedZoom = new DisplayIcons_new(counterIconsIndividual,zoom_red_icon,windowWidth/5 + 30,20, 'RED ZOOM');;
+      iconGreenIsolation = new DisplayIcons_new(counterIconsCollective,isolation_green_icon,windowWidth/5 + 30,30+(windowHeight/14)+(windowHeight/120), 'GREEN ISOLATION');;
+      iconRedIsolation = new DisplayIcons_new(counterIconsIndividual,isolation_red_icon,windowWidth/5 + 30,20, 'RED ISOLATION');
+      iconGreenRain = new DisplayIcons_new(counterIconsCollective,rain_green_icon,windowWidth/5 + 30,30+(windowHeight/14)+(windowHeight/120), 'GREEN RAIN');
+      iconRedRain = new DisplayIcons_new(counterIconsIndividual,rain_red_icon,windowWidth/5 + 30,20, 'RED RAIN');
+      iconRedRain_C = new DisplayIcons_new(counterIconsCollective,rain_red_icon,windowWidth/5 + 30,30+(windowHeight/14)+(windowHeight/120), 'RED MASK')
+      iconRedMask_C = new DisplayIcons_new(counterIconsCollective,mask_red_icon,windowWidth/5 + 30,30+(windowHeight/14)+(windowHeight/120), 'RED MASK');
+      iconRedMask_I = new DisplayIcons_new(counterIconsIndividual,mask_red_icon,windowWidth/5 + 30,20, 'RED MASK');
+      iconGreenMask = new DisplayIcons_new(counterIconsCollective,mask_green_icon,windowWidth/5 + 30,30+(windowHeight/14)+(windowHeight/120), 'GREEN MASK');
+      iconGreenDistancing = new DisplayIcons_new(counterIconsIndividual,distancing_green_icon,windowWidth/5 + 30,20, 'GREEN DISTANCING');
+      iconRedDistancing = new DisplayIcons_new(counterIconsCollective,distancing_red_icon,windowWidth/5 + 30,30+(windowHeight/14)+(windowHeight/120), 'RED DISTANCING');;
+      iconGreenSingleContact = new DisplayIcons_new(counterIconsIndividual,singleContact_green_icon,windowWidth/5 + 30,20, 'GREEN SINGLECONTACT');
+      iconGreenClouds = new DisplayIcons_new(counterIconsIndividual,clouds_green_icon,windowWidth/5 + 30,20, 'GREEN CLOUDS');;
   
 // P L A Y E R 
       //Player is last, so it stays in front
@@ -372,6 +460,14 @@ function setup() {
 
 
 function draw() {
+  let randomizer = random(1); 
+  let lastIndividualScore;
+  let lastCollectiveScore;
+  if(randomizer < 2){
+    lastIndividualScore = individualScore;
+    lastCollectiveScore = collectiveScore;
+  }
+
 
   //STARTING PAGE 
   if(startingPage){
@@ -389,11 +485,13 @@ function draw() {
         fill(255);
         textFont('Avenir');
         textAlign(CENTER);
-        textSize(windowHeight/3);
+        textSize(windowHeight/4);
         text("FREEDOM", windowWidth/2,windowHeight/2);
 
         textSize(windowHeight/40);
-        text("Click to start", windowWidth/2,windowHeight/2+100);
+        text("This game acts as a small simulation of the corona measures during the pandemic ",  windowWidth/2,windowHeight/2+50);
+        textSize(windowHeight/70);
+        text("Click to start", windowWidth/2,windowHeight - 50);
 
         //moving clouds
         docu_clouds.position.y = windowHeight/2;
@@ -414,31 +512,16 @@ function draw() {
 
   // INFOPAGE
   if(explainPage){
-      push();
-        //infopage (docu)
-        background(docu_bg_img);
 
-        if (docu_clouds.position.x <= -900){
-          docu_clouds.position.x = 2300;
-        }
-        docu_clouds.position.x -= 0.5;
-
-        drawSprite(docu_clouds);
-        drawSprite(docu);
-      pop();
-
-      //next page
-      if(mouseIsPressed && mouseClickCheck){
-        mouseClickCheck = false;
-        explainPage = false;
-        running = true;
-        //setTimeout(function(){mouseClickCheck = true;}, 500);
-      }
+    tutorial();
+    
   }
 
 
   //RUNNING
   if (running){
+      gameHasStarted = true;
+
       
       // B A C K G R O U N D S 
       background(0); //Black BG outside of frame 
@@ -657,64 +740,74 @@ function draw() {
         let ScreenPlayerRelation = width/2;
         let ScreenPlayerRelationH = height/2;
 
-        if (player1.position.x >= EDGE_R - ScreenPlayerRelation){
-          camera.position.x = camera.position.x;
-        }else if(player1.position.x <= EDGE_L + ScreenPlayerRelation){
-          camera.position.x = camera.position.x;
-        }else{
-          camera.position.x = player1.position.x;
-        }
+        
 
-      //LIMITATIONS GRAVITYAREA Y-AXIS
-                //NOCHMAL PRÜFEN  ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if(player1.overlap(gravityArea)){
-            player1.rotation = 0;
-            enteringFlyingArea = true;
-            if (player1.overlap(gravityArea) && enteringGravityArea === false){
-              camera.position.y = player1.position.y - (windowHeight/4);
-            }
-            if(camera.position.y >= player1.position.y && enteringGravityArea){
-                while (camera.position.y > player1.position.y - (windowHeight/4)){
-                  camera.position.y -= 1;
-                }
-            } 
-            if(camera.position.y = player1.position.y - (windowHeight/4)){
-              camera.position.y = player1.position.y - (windowHeight/4);
-              //enteringGravityArea = false;
-            }
-        }
+          if (player1.position.x >= EDGE_R - ScreenPlayerRelation){
+            camera.position.x = camera.position.x;
+          }else if(player1.position.x <= EDGE_L + ScreenPlayerRelation){
+            camera.position.x = camera.position.x;
+          }else{
+            camera.position.x = player1.position.x;
+          }
+  
+        //LIMITATIONS GRAVITYAREA Y-AXIS
+                  //NOCHMAL PRÜFEN  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+          if(player1.overlap(gravityArea)){
+              player1.rotation = 0;
+              enteringFlyingArea = true;
+              if (player1.overlap(gravityArea) && enteringGravityArea === false){
+                camera.position.y = player1.position.y - (windowHeight/4);
+              }
+              if(camera.position.y >= player1.position.y && enteringGravityArea){
+                  while (camera.position.y > player1.position.y - (windowHeight/4)){
+                    camera.position.y -= 1;
+                  }
+              } 
+              if(camera.position.y = player1.position.y - (windowHeight/4)){
+                camera.position.y = player1.position.y - (windowHeight/4);
+                //enteringGravityArea = false;
+              }
+          }
+  
+        //LIMITATIONS GRAVITYAREA Y-AXIS
+          if(player1.overlap(flyingArea)){
+              enteringGravityArea = true;
+              if(camera.position.y < player1.position.y-5 && enteringFlyingArea){//wenn camera kleiner und entering
+                  while (camera.position.y < height/2){
+                    camera.position.y += 1;
+                  }
+              }else if (camera.position.y < player1.position.y-5 && enteringFlyingArea === false){//wenn camera kleiner aber nicht entering
+                camera.position.y = player1.position.y;
+              }
+              if(camera.position.y >= player1.position.y){//wenn camera gleich, verfolge Player und entering falsch
+                camera.position.y = player1.position.y;
+                enteringFlyingArea = false;
+              }
+              
+              //can only go to edge
+              if (player1.position.y <= ScreenPlayerRelationH ){
+                camera.position.y = ScreenPlayerRelationH;
+              }
+          }
+        
+        
+        
+      // P L A Y E R   M O V E M E N T
+  
+        //Flying or walking
+          if (player1.overlap(gravityArea)){
+            playerMovement();
+          }else if (player1.overlap(flyingArea)){
+            flying();
+          }
 
-      //LIMITATIONS GRAVITYAREA Y-AXIS
-        if(player1.overlap(flyingArea)){
-            enteringGravityArea = true;
-            if(camera.position.y < player1.position.y-5 && enteringFlyingArea){//wenn camera kleiner und entering
-                while (camera.position.y < height/2){
-                  camera.position.y += 1;
-                }
-            }else if (camera.position.y < player1.position.y-5 && enteringFlyingArea === false){//wenn camera kleiner aber nicht entering
-              camera.position.y = player1.position.y;
-            }
-            if(camera.position.y >= player1.position.y){//wenn camera gleich, verfolge Player und entering falsch
-              camera.position.y = player1.position.y;
-              enteringFlyingArea = false;
-            }
-            
-            //can only go to edge
-            if (player1.position.y <= ScreenPlayerRelationH ){
-              camera.position.y = ScreenPlayerRelationH;
-            }
-        }
-      
-      
-      
-    // P L A Y E R   M O V E M E N T
 
-      //Flying or walking
-        if (player1.overlap(gravityArea)){
-          playerMovement();
-        }else if (player1.overlap(flyingArea)){
-          flying();
-        }
+
+
+
+
+        
+        
       
   
     // D R A W   S P R I T E S
@@ -730,7 +823,7 @@ function draw() {
 
         //Flacker Effect
         push();
-            let randomizer = random(1);
+        imageMode(CORNER);
             if(randomizer > 0.5){
                 image(lights_unten_img,-SCENE_W/2,0);
                 image(lights_oben_img,-SCENE_W/2,0);
@@ -773,7 +866,6 @@ function draw() {
           //DISTANCING 
           for (let i = 0; i < total_number_of_groups; i++){
               att_points[i].move();
-              //att_points[i].show(); //debugging
               swarmFollowAttraction(distancing_groups[i], att_points[i].positionX, att_points[i].positionY);
           }
 
@@ -791,8 +883,6 @@ function draw() {
     // G U I
 
       camera.off();
-      //always after all Sprites are drawn
-      //für unbewegliche UI Elemente
 
           // SCORING SYSTEM MIN MAX
               
@@ -878,23 +968,25 @@ function draw() {
                 fill(255);
                 text(updateUserInfo, windowWidth/2, 20+(heightScoreDisplay/2)+(windowHeight/120));
                 if(maskOn){
-                  updateUserInfo='You are wearing a mask';
+                    updateUserInfo='You are wearing a mask';
                 }else{
-                  updateUserInfo='You are not wearing a mask';
+                    updateUserInfo='You are not wearing a mask';
                 }
                 
                 if(touchedPerson){
-                  updateUserInfo='You met somebody';
+                    updateUserInfo='You met somebody';
+                }else if(clean < 0){
+                    updateUserInfo="You need to get desinfected";
                 }else if(player1.overlap(hygieneArea)){
-                  updateUserInfo='You are desinfected';
+                    updateUserInfo='You are desinfected';
                 }else if(touchedGroup){
-                  updateUserInfo='You met a group of people';
+                    updateUserInfo='You met a group of people';
                 }else if(player1.overlap(zoomArea)){
-                  updateUserInfo='You are using digital media';
+                    updateUserInfo='You are using digital media';
                 }else if(player1.overlap(flyingArea)){
-                  updateUserInfo='Feel free to fly';
+                    updateUserInfo='Feel free to fly';
                 }else if(player1.overlap(isolationArea)){
-                  updateUserInfo='You entered your home';
+                    updateUserInfo='You entered your home';
                 }
 
 
@@ -902,82 +994,235 @@ function draw() {
 
                 //pause 
                 displayIcons(pause_icon,pause_hover_icon,windowWidth - windowWidth/20 - 20, windowWidth/35);
+
                 
                 //sound
                 displayIcons(sound_icon,sound_hover_icon,windowWidth - windowWidth/20 - 20,windowHeight - (windowHeight/10));
 
                 //zoom
                 displayIcons(zoom_icon,zoom_hover_icon,20,windowHeight - (windowHeight/10));
-
-               
+                
+              
                 
 
+          // FEEDBACK ICONS
+                if(maskOn){
+                  iconRedMask_I.display(); //I
+                  iconGreenMask.display(); //C
+                  if(arrayCheckMask){
+                    iconRedMask_I.push();
+                    iconRedMask_C.pop();
+                    iconGreenMask.push();
+                    arrayCheckMask = false;
+                  }
+                }else{
+                  iconRedMask_C.display();
+                  if(!arrayCheckMask){
+                    iconGreenMask.pop();
+                    iconRedMask_C.push();
+                    iconRedMask_I.pop();
+                    arrayCheckMask = true;
+                  }
+                }
+
+                if(player1.overlap(zoomArea) && boring > 5 && maxZoomC < 20){
+                  iconGreenZoom.display();
+                  iconGreenZoom_I.display();
+                  if(!arrayCheckZoom){
+                      iconGreenZoom.push();
+                      iconGreenZoom_I.push();
+                      arrayCheckZoom = true;
+                  }
+                }else if(player1.overlap(zoomArea) && boring < 5){
+                    iconRedZoom.display();
+                    iconGreenZoom.display();
+                    if(!arrayCheckZoomIndi){
+                      iconGreenZoom_I.pop();
+                      iconRedZoom.push();
+                      arrayCheckZoomIndi = true;
+                    }
+                }else if(player1.overlap(zoomArea) === false){
+                  if(arrayCheckZoom){
+                      iconGreenZoom.pop();
+                      iconGreenZoom_I.pop();
+                      arrayCheckZoom = false;
+                  }else if(arrayCheckZoomIndi){
+                      iconRedZoom.pop();
+                      iconGreenZoom.pop();
+                      arrayCheckZoomIndi = false;
+                  }
+                }
+
+                if(player1.overlap(isolationArea)){
+                  iconRedIsolation.display();
+                  iconGreenIsolation.display();
+                  if(!arrayCheckIsolation){
+                    iconRedIsolation.push();
+                    iconGreenIsolation.push();
+                    arrayCheckIsolation = true;
+                  }
+                }else if(player1.overlap(isolationArea) === false){
+                    if(arrayCheckIsolation){
+                      iconRedIsolation.pop();
+                      iconGreenIsolation.pop();
+                      arrayCheckIsolation = false;
+                    }
+                  }
+                
+                if(player1.overlap(flyingArea)){
+                  iconGreenClouds.display();
+                  if(!arrayCheckClouds){
+                    iconGreenClouds.push();
+                    arrayCheckClouds = true;
+                  }
+                }else if(player1.overlap(flyingArea) === false){
+                  if(arrayCheckClouds){
+                    iconGreenClouds.pop();
+                    arrayCheckClouds = false;
+                  }
+                }
+
+                if(player1.overlap(hygieneArea)){
+                  iconRedRain.display();
+                  iconGreenRain.display();
+                  if(!arrayCheckHygiene){
+                    iconRedRain.push();
+                    iconGreenRain.push();
+                    arrayCheckHygiene = true;
+                  }
+                }else if(player1.overlap(hygieneArea) === false){
+                  if(arrayCheckHygiene){
+                    iconRedRain.pop();
+                    iconGreenRain.pop();
+                    arrayCheckHygiene = false;
+                  }
+                }
+
+                if(clean < 0){
+                  iconRedRain_C.display();
+                  if(!arrayCheckClean){
+                    iconRedRain_C.push();
+                    arrayCheckClean= true;
+                  }
+                }else{
+                  if(arrayCheckClean){
+                    iconRedRain_C.pop();
+                    arrayCheckClean= false;
+                  }
+                }
+
+                if (player1.overlap(singlepeople2) || player1.overlap(singlepeople)){
+                    iconGreenSingleContact.display();
+                    if(!arrayCheckSinglePeople){
+                        iconGreenSingleContact.push();
+                        arrayCheckSinglePeople = true;
+                    }
+                }else{
+                  if(arrayCheckSinglePeople){
+                      iconGreenSingleContact.pop();
+                      arrayCheckSinglePeople = false;
+                  }
+                }
+
+                if(touchedGroup){
+                  iconRedDistancing.display();
+                  iconGreenDistancing.display();
+                  if(!arrayCheckDistancing){
+                      iconRedDistancing.push();
+                      iconGreenDistancing.push();
+                      arrayCheckDistancing = true;
+                  }
+                }else{
+                  if(arrayCheckDistancing){
+                    iconRedDistancing.pop();
+                    iconGreenDistancing.pop();
+                    arrayCheckDistancing = false;
+                  }
+                }
+              
+                console.log('I: ' + counterIconsIndividual, 'C: ' + counterIconsCollective);
 
             pop();
 
 
-          //ENDINGS
 
-              if (individualScore < 10 && collectiveScore > 90){
-                  running = !running;
-                  fill(0,0,200);
-                  rect(0, 0, windowWidth, windowHeight);
-              }
-              if (individualScore > 90 && collectiveScore < 10){
-                  ending_1 = true;
-              }
-              if (individualScore < 10 && collectiveScore < 10){
-                  running = !running;
-                  fill(0,0,200);
-                  rect(0, 0, windowWidth, windowHeight);
-              }
-              if (individualScore > 90 && collectiveScore > 90){
-                  running = !running;
-                  fill(0,0,200);
-                  rect(0, 0, windowWidth, windowHeight);
+
+          //FEedback Color Scores
+              if(lastIndividualScore < individualScore){
+                fbS_I_r = 0;
+                fbS_I_g = 230;
+                fbS_I_b = 180;
+              }else if(individualScore < lastIndividualScore){
+                fbS_I_r = 220;
+                fbS_I_g = 0;
+                fbS_I_b = 60;
+              }else{
+                fbS_I_r = 255;
+                fbS_I_g = 255;
+                fbS_I_b = 255;
               }
 
-      
-
-          //DEBUGGING
-          // textSize(40);
-          // text(individualScore, 0, 100);
-          // text(collectiveScore, 0, 200);
-
+              if(lastCollectiveScore < collectiveScore){
+                fbS_C_r = 0;
+                fbS_C_g = 230;
+                fbS_C_b = 180;
+              }else if(collectiveScore < lastCollectiveScore){
+                fbS_C_r = 220;
+                fbS_C_g = 0;
+                fbS_C_b = 60;
+              }else{
+                fbS_C_r = 255;
+                fbS_C_g = 255;
+                fbS_C_b = 255;
+              }
 
     camera.on();
-
-      // DEBUGGING
-      // maskPosition.debug = mouseIsPressed; //so werden die collider visualisiert
-      // invisibleGroundCheck.debug = mouseIsPressed;
-      // stairs_1.debug = mouseIsPressed;
-      // player1.debug = mouseIsPressed;
-      // teleportArea.debug = mouseIsPressed;
-      // teleportArea1.debug = mouseIsPressed;
-
 
   }//end running
 
-
-  if(ending_1){
-    camera.zoom = 0.3;
-    camera.position.x = 0;
-    camera.position.y = SCENE_H/2;
-   
-    //Sound ausschalten
-    camera.off();
-      push();
-        noStroke();
-        fill('rgba(0,0,0, 0.5)');
-        rect(0, 0, windowWidth, windowHeight);
-
-        fill(255);
-        textAlign(CENTER);
-        textSize(windowHeight/10);
-        text('Individual Freedom', windowWidth/2, windowHeight/2);
-      pop();
-    camera.on();
+  //PAUSE
+  if(running && mouseIsPressed &&
+        mouseX > windowWidth - windowWidth/20 - 20 &&
+        mouseX < (windowWidth - windowWidth/20 - 20) + play_icon.width &&
+        mouseY > windowWidth/35 &&
+        mouseY < windowWidth/35 + (play_icon.height)/10){
+              running = false;
+              onPause = true;
+              setTimeout(function(){notOnPause = false;}, 300);
   }
+  if(onPause){
+    camera.off();
+    tutorial();
+    displayIcons(play_icon,play_hover_icon,windowWidth - windowWidth/20 - 20, windowWidth/35);
+    camera.on();
+    if(mouseIsPressed && !notOnPause &&
+      mouseX > windowWidth - windowWidth/20 - 20 &&
+      mouseX < (windowWidth - windowWidth/20 - 20) + play_icon.width &&
+      mouseY > windowWidth/35 &&
+      mouseY < windowWidth/35 + (play_icon.height)/10){
+            running = true;
+            onPause = false;
+            setTimeout(function(){notOnPause = true;}, 300);
+    }
+  }
+
+
+  // ENDINGS
+  if(individualScore > 90 && collectiveScore < 10){
+    running = false;
+    newClean = 'ciaociao';
+    window.location = './individual.html';
+  }else if(individualScore < 10 && collectiveScore > 90){
+    running = false;
+    window.location = './collective.html';
+  }else if(individualScore > 90 && collectiveScore > 90){
+    running = false;
+    window.location = './nofreedom.html';
+  }else if(individualScore < 10 && collectiveScore < 10){
+    running = false;
+    window.location = './allfreedom.html';
+  }
+
 }//end draw
 
 
@@ -1014,7 +1259,6 @@ function playerMovement(){
 
 
       //jumping
-        //wenn space, innerhalb gravity area und gerade am Boden war, dann jumpen
         if(keyWentDown(' ') && playerGroundCheck && player1.overlap(gravityArea)){
             jump_sound.play();
             jump_sound.setVolume(0.6);
@@ -1024,7 +1268,6 @@ function playerMovement(){
     
 
       //ground check
-        //wenn player boden berührt hat, dann ist der Ground check true
         if(player1.overlap(middleGround) || player1.overlap(ground)){
             playerGroundCheck = true;
             isJumping = false;
@@ -1113,90 +1356,19 @@ function teleporting(){
 
 
 
-// SCORE FEEDBACK
-function feedbackUpScoreI(){
-    fbS_I_r = 0;
-    fbS_I_g = 230;
-    fbS_I_b = 180;
-    if(fbS_I_g === 230){
-      camera.off();
-      displayIcons(arrow_up_icon,arrow_up_icon,windowWidth/5 + 30,20);
-      camera.on();
-    }
-    setTimeout(function(){fbS_I_r = 255; fbS_I_g = 255; fbS_I_b = 255;}, 500);
-}
 
-function feedbackDownScoreI(){
-    fbS_I_r = 220;
-    fbS_I_g = 0;
-    fbS_I_b = 60;
-    if(fbS_I_r === 220){
-      camera.off();
-      displayIcons(arrow_down_icon,arrow_down_icon,windowWidth/5 + 30,20);
-      camera.on();
-    }
-    setTimeout(function(){fbS_I_r = 255; fbS_I_g = 255; fbS_I_b = 255;}, 500);
-}
-function feedbackUpScoreC(){
-    fbS_C_r = 0;
-    fbS_C_g = 230;
-    fbS_C_b = 180;
-    if(fbS_C_g === 230){
-      camera.off();
-      displayIcons(arrow_up_icon,arrow_up_icon,windowWidth/5 + 30,40+(windowHeight/14)+(windowHeight/120));
-      camera.on();
-    }
-    setTimeout(function(){fbS_C_r = 255; fbS_C_g = 255; fbS_C_b = 255;}, 500);
-}
-function feedbackDownScoreC(){
-    fbS_C_r = 220;
-    fbS_C_g = 0;
-    fbS_C_b = 60;
-    if(fbS_C_r === 220){
-      camera.off();
-      displayIcons(arrow_down_icon,arrow_down_icon,windowWidth/5 + 30,40+(windowHeight/14)+(windowHeight/120));
-      camera.on();
-    }
-    setTimeout(function(){fbS_C_r = 255; fbS_C_g = 255; fbS_C_b = 255;}, 500);
-}
 
 
 
 // ---- MASK ----
 
-let maskOnInterval, maskOffInterval;
-function setMaskOnInterval (){
-    maskOnInterval = setInterval(function(){
-      // SCORE CHANGE WHILE MASK IS ON
-        collectiveScore += 0.1;
-        individualScore -= 0.1;
-    },500);//every 1000 milliseconds
-}
-function setMaskOffInterval (){
-    maskOffInterval = setInterval(function(){
-      // SCORE CHANGE WHILE MASK IS OFF
-        individualScore += 0.1; 
-        collectiveScore -= 0.1;
-    },500);//every 1000 milliseconds
-}
-  
-function stopMaskOnInterval(){
-    clearInterval(maskOnInterval);
-}
-function stopMaskOffInterval(){
-    clearInterval(maskOffInterval);
-}
 
 function maskOnOff(){
 
     //maske anziehen
       if(player1.overlap(maskPosition) && maskOn === false && maskGroundCheck){
-            feedbackUpScoreC();
-            feedbackDownScoreI();
             maskGroundCheck = false;
             maskOn = true; 
-            setMaskOnInterval();
-            stopMaskOffInterval();
       }
     //auf dem Boden gewesen 
       else if(player1.overlap(invisibleGroundCheck) && maskOn && maskGroundCheck === false){
@@ -1204,24 +1376,25 @@ function maskOnOff(){
       } 
     //maske ausziehen
       if (player1.overlap(maskPosition) && maskOn && maskGroundCheck){
-            feedbackUpScoreI();
-            feedbackDownScoreC();
             maskGroundCheck = false;
             maskOn = false;
-            setMaskOffInterval();
-            stopMaskOnInterval();
       }
   //auf dem Boden gewesen
     else if(player1.overlap(invisibleGroundCheck) && maskOn === false && maskGroundCheck === false){
             maskGroundCheck = true;
+    }
+
+    if(maskOn){
+      collectiveScore += SS_MASK_C;
+      individualScore -= SS_MASK_I;
+    }else{
+      collectiveScore -= SS_MASK_C;
     }
 }
 
 
 // ----- HYGIENE -----
 let boostHygine = false;
-let hygieneBoostIntervall;
-let hasStartedTimeoutH = false;
 let clean = 5; //je nach dem wie Clean jemand ist (0 voll / 10 null)
 
 function movingHygieneArea(){
@@ -1250,23 +1423,21 @@ function movingHygieneArea(){
 }
 
 function hygieneScore() {
-  if(clean >= 10){ clean = 10; }else if(clean <= 1){clean = 1;}
-  
-  if (player1.overlap(hygieneArea) && boostHygine === false){
-      clean = 1;
-      boostHygine = true;
-      feedbackUpScoreC();
-      feedbackDownScoreI();
-      collectiveScore += 20;
-      individualScore -= 10;
-  }else if (player1.overlap(hygieneArea) === false && boostHygine && !hasStartedTimeoutH){
-      hygieneBoostIntervall = setTimeout(function(){boostHygine = false; hasStartedTimeoutH = false;}, 20000); //wenn in der letzten Sekunde ein boost war
-      hasStartedTimeoutH = true;
-    }
+  //clean: 10 = desinfected // clean: -10 = dirty
+  if(clean >= 10){ clean = 10; }else if(clean <= -10){clean = -10;}
 
-  if(player1.overlap(hygieneArea) === false){
-    //clean *= 1.001; // wie schnell der Wert zurück au 10 fällt 
-    //collectiveScore -= clean * 0.001; // wie starken Impact clean auf den Score hat
+  if(player1.overlap(hygieneArea) && !boostHygine){
+    boostHygine = true;
+    individualScore -= SS_HYGIENE_I;
+    collectiveScore += SS_HYGIENE_C;
+    clean = 10;
+  }
+
+  clean -= 0.005;
+
+  if(clean < 0){
+    collectiveScore += (clean * 0.006);
+    boostHygine = false;
   }
 
 }
@@ -1292,18 +1463,19 @@ function zoomScore() {
         maxZoomC += 0.01; //maximale Zunahme des collective Werts für den Bereich
 
         if(maxZoomC < 20){
-            collectiveScore += 0.01;
-            feedbackUpScoreC();
+          //scoring-system
+            collectiveScore += SS_ZOOM_C;
         }else{
             collectiveScore += 0;
         }
         
         if(boring > 5){
-            individualScore += boring * 0.001;
-            feedbackUpScoreI();
+          //scoring-system
+            SS_ZOOM_I = 0.001;
+            individualScore += boring * SS_ZOOM_I;
         }else{
-            individualScore += boring * -0.005;
-            feedbackDownScoreI();
+            SS_ZOOM_I = -0.005;
+            individualScore += boring * SS_ZOOM_I;
         }
     }else{  
         boring *= 1.001; //lässt boring wieder hoch gehen
@@ -1314,7 +1486,6 @@ function zoomScore() {
 // --- ISOLATION ----
 let lonely = 1; //1= not lonely ; 10 = very lonely
 function isolationScore(){
-    //console.log(lonely + "LONELY")
     let insideIsolationArea;
     if (lonely <= 1){lonely = 1;}else if(lonely >= 10){lonely = 10;}
     if (player1.overlap(isolationArea)){
@@ -1324,10 +1495,10 @@ function isolationScore(){
     }
 
     if (insideIsolationArea){
-        feedbackDownScoreI();
         lonely *= 1.001;
-        individualScore -= lonely * 0.001;
-        collectiveScore += lonely * 0.001;
+        //scoring-system
+        individualScore -= lonely * SS_ISOLATION_I;
+        collectiveScore += lonely * SS_ISOLATION_C;
     }else{
         lonely *= 0.999; //lässt außerhalb lonely wieder runter gehen
     }
@@ -1336,8 +1507,8 @@ function isolationScore(){
 // FLYING 
 function flyingScore(){
   if(player1.overlap(flyingArea)){
-    feedbackUpScoreI();
-    individualScore += 0.001;
+    //scoring-system
+    individualScore += SS_FLYING_I;
   }
 }
 
@@ -1365,10 +1536,9 @@ function singlePeopleWalking () {
         singleContact_sound.play();
         singleContact_sound.setVolume(3.0);
         setTimeout(function(){touchedPerson = false;},5000);
-        feedbackUpScoreI();
-        feedbackDownScoreC();
-        individualScore += 5 ;
-        collectiveScore -= 3;
+        //scoring-system
+        individualScore += SS_SINGLECONTACT_I;
+        collectiveScore += SS_SINGLECONTACT_C;
     } 
 }
 
@@ -1412,18 +1582,22 @@ function swarmFollowAttraction(distancing_group, attraction_pointX, attraction_p
     }
 
     if(player1.overlap(distancing_group) && touchedGroup === false){
-        feedbackUpScoreI();
-        feedbackDownScoreC();
         distancing_sound.play();
         distancing_sound.play();
         distancing_sound.setVolume(3.0);
-        individualScore += 10;
-        collectiveScore -= 30;
-        touchedGroup = true;
+        //scoring-system
+        if(maskOn){
+          individualScore += SS_DISTANCING_I;
+          collectiveScore += SS_DISTANCING_C;
+        }else{
+          individualScore += (SS_DISTANCING_I/1.5);
+          collectiveScore += (SS_DISTANCING_C/2);
+        }
+        touchedGroup = true;    
     }
     if(player1.overlap(distancing_group) === false && touchedGroup && !hasStartedTimeoutS){
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        setTimeout(function (){touchedGroup = false; hasStartedTimeoutS = false;},10000) // 10000 macht problem aber 1000 nicht
+        setTimeout(function (){touchedGroup = false; hasStartedTimeoutS = false;},3000) // 10000 macht problem aber 1000 nicht
         hasStartedTimeoutS = true;
     }
  
@@ -1518,7 +1692,7 @@ function Rain(x,y){
 
 
 function graphicsScreen(graphics, x, y, w, h, stroke, r, g, b){
-
+    imageMode(CORNER);
     graphics.background(stroke);
     graphics.noFill();
     if(collectiveScore < 20){
@@ -1598,7 +1772,7 @@ function playPauseSound(){
 
 function displayIcons(img,img_hover,w,h){
     push();
-        scale(0.1)
+        scale(0.1);
         let currentImg = img; 
         image(currentImg,w*10,h*10);
     pop();
@@ -1620,23 +1794,40 @@ function displayIcons(img,img_hover,w,h){
 }
 
 
+class DisplayIcons_new{
+  constructor(arr, image, width, height, string){
+    this.arr = arr;
+    this.image = image;
+    this.width = width;
+    this.height = height;
+    this.string = string;
+  }
 
-  // PAUSE FUNCTION
-function mousePressed(){
-    if(mouseX > windowWidth - windowWidth/20 - 20 &&
-      mouseX < (windowWidth - windowWidth/20 - 20) + play_icon.width &&
-      mouseY > windowWidth/35 &&
-      mouseY < windowWidth/35 + (play_icon.height)/10){
-            button_sound.play();
-            running = !running; // flip the boolean
-            background(docu_bg_img);
-            //not in a loop daher klappt es nicht
-            displayIcons(play_icon,play_hover_icon,windowWidth - windowWidth/20 - 20, windowWidth/35);
-            imageMode(CENTER);
-            image(docu_img,windowWidth/2,windowHeight/2);
-            imageMode(CORNER);
-    }
+  push(){
+    this.arr.push(this.string);
+  }
+
+  pop(){
+    this.arr.pop();
+  }
+
+  display(){
+    push();
+      scale(0.8);
+      if(this.arr.indexOf(this.string) === 0){
+          image(this.image,this.width*1.25,this.height*1.25);
+      }else if(this.arr.indexOf(this.string)=== 1){
+          image(this.image,(this.width*1.25)+80,this.height*1.25);
+      }else if(this.arr.indexOf(this.string)=== 2){
+          image(this.image,(this.width*1.25)+160,this.height*1.25);
+      }else if(this.arr.indexOf(this.string)=== 3){
+          image(this.image,(this.width*1.25)+240,this.height*1.25);
+      }
+  pop();
+  }
 }
+
+
 
 
 
@@ -1644,7 +1835,167 @@ function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
 
-  //wenn irgendein key gedrückt wird add 0.01 für den movement dings
-  //wenn key gedrückt +individual, -collective
-  //wenn kein key gedrückt -individual, +collective 
-  //so kann der wert durch nichts drücken nicht auf 0 sinken
+
+function tutorial(){
+
+  push();
+  camera.off();
+
+
+      background(docu_bg_img);
+
+      textFont('Avenir');
+      textAlign(CENTER);
+      imageMode(CENTER);
+      rectMode(CENTER);
+      fill(255);
+      noStroke();
+      textSize(20);
+
+
+      
+
+
+      if(intro_0){
+            if(mouseX > windowWidth/2-75 && mouseX < windowWidth/2+75 &&
+              mouseY > windowHeight-60){
+                fill(200,0,50);
+                if(mouseIsPressed){
+                  window.location = './about.html';
+                }
+            }else{
+                fill(0);
+            }
+            
+            rect(windowWidth/2,windowHeight-45,150,30,100);
+            fill(255);
+            textSize(12);
+            text("A B O U T",windowWidth/2,windowHeight-40);
+
+            textSize(windowHeight/30);         
+            textSize(20);
+       
+            if(mouseX > windowWidth/2-150 && mouseX < windowWidth/2+150
+                && mouseY > windowHeight/2-90 && mouseY < windowHeight/2-10){
+                fill(100,0,50);
+                rect(windowWidth/2,windowHeight/2-50,300,80,100);
+                fill(255);
+                text("WATCH TUTORIAL",windowWidth/2,windowHeight/2-45);
+                if(mouseIsPressed && mouseClickCheck){
+                        mouseClickCheck = false;
+                        intro_0 = false;
+                        intro_1 = true;
+                        setTimeout(function(){mouseClickCheck = true;},200)
+                }
+            }else{
+                fill(255);
+                rect(windowWidth/2,windowHeight/2-50,300,80,100);
+                fill(0);
+                text("WATCH TUTORIAL",windowWidth/2,windowHeight/2-45);
+            }
+
+            if(!gameHasStarted){
+                if(mouseX > windowWidth/2-150 && mouseX < windowWidth/2+150
+                    && mouseY > windowHeight/2+10 && mouseY < windowHeight/2+90){
+                    fill(100,0,50);
+                    rect(windowWidth/2,windowHeight/2+50,300,80,100);
+                    fill(255);
+                    text("SKIP TUTORIAL",windowWidth/2,windowHeight/2+55);
+                        if(mouseIsPressed && mouseClickCheck){
+                          mouseClickCheck = false;
+                          intro_0 = false;
+                          running = true;
+                          setTimeout(function(){mouseClickCheck = true;},200)
+                        }
+                }else{
+                    fill(255);
+                    rect(windowWidth/2,windowHeight/2+50,300,80,100);
+                    fill(0);
+                    text("SKIP TUTORIAL",windowWidth/2,windowHeight/2+55);
+                }
+
+            }else if(gameHasStarted){
+                if(mouseX > windowWidth/2-150 && mouseX < windowWidth/2+150
+                    && mouseY > windowHeight/2+10 && mouseY < windowHeight/2+90){
+                    fill(100,0,50);
+                    rect(windowWidth/2,windowHeight/2+50,300,80,100);
+                    fill(255);
+                    text("CONTINUE",windowWidth/2,windowHeight/2+55);
+                        if(mouseIsPressed && mouseClickCheck){
+                          mouseClickCheck = false;
+                          intro_0 = false;
+                          running = true;
+                          onPause = false;
+                          setTimeout(function(){mouseClickCheck = true;notOnPause = true;},200)
+                        }
+                }else{
+                    fill(255);
+                    rect(windowWidth/2,windowHeight/2+50,300,80,100);
+                    fill(0);
+                    text("CONTINUE",windowWidth/2,windowHeight/2+55);
+                }
+            }
+      
+           
+      }
+        
+
+      if(intro_1){
+        tutorialSinglePage(intro_1_img, "The world consists of three levels: the sky, the neutral zone and your home."," 1/7 \n Click to continue");
+      }else if(intro_2){
+        tutorialSinglePage(intro_2_img, "In the sky you can fly and meet groups of people.","2/7 \nClick to continue");
+      }else if(intro_3){
+        tutorialSinglePage(intro_3_img, "In the neutral zone, your mask is located, \n individuals with masks walk along and a digital media screen is located in the center.","3/7 \nClick to continue");
+      }else if(intro_4){
+        tutorialSinglePage(intro_4_img, "You are alone in your home. Here you will also find a digital media area.","4/7 \nClick to continue");
+      }else if(intro_5){
+        tutorialSinglePage(intro_5_img, "A small rain shower runs across the game world.\n If you get caught in the rain you will be disinfected.","5/7 \nClick to continue");
+      }else if(intro_6){
+        tutorialSinglePage(intro_6_img, "The scores on the left side show you two values,\n which change depending on the areas you are in.\n Next to the scores you will see icons that explain what affects your current scores: \n Rain, Digital Media, Groups, Home, Individuals, Flying, Mask ","6/7 \nClick to continue");
+      }else if(intro_7){
+        tutorialSinglePage(intro_7_img, "To walk, just use the arrow keys and to jump, use the space bar.\n To fly, you have to jump into the sky and \nclick the up arrow at the same time. ","7/7 \n START");
+      }else{
+        intro_0 = true;
+      }
+
+  camera.on();
+  pop();
+}
+
+function tutorialSinglePage(img, string, scdString){
+      image(img, windowWidth/2, windowHeight/2);
+      text(string, windowWidth/2,100);
+
+      textSize(windowHeight/70);
+      text(scdString, windowWidth/2,windowHeight - 50);
+
+      if(mouseIsPressed && mouseClickCheck){
+        console.log('pressed');
+              mouseClickCheck = false;
+              if(intro_1){
+                intro_1 = false;
+                intro_2 = true;
+              }else if(intro_2){
+                intro_2 = false;
+                intro_3 = true;
+              }else if(intro_3){
+                intro_3 = false;
+                intro_4 = true;
+              }else if(intro_4){
+                intro_4 = false;
+                intro_5 = true;
+              }else if(intro_5){
+                intro_5 = false;
+                intro_6 = true;
+              }else if(intro_6){
+                intro_6 = false;
+                intro_7 = true;
+              }else if(intro_7){
+                intro_7 = false;
+                explainPage = false;
+                running = true;
+              }
+
+              setTimeout(function(){mouseClickCheck = true;},200)
+      }
+}

@@ -1,0 +1,110 @@
+html,body {
+    background-color: black;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('./img/sky.png');
+  }
+
+  
+  h1 {
+      color:white;
+      text-align: center;
+      font-size: 6rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.2rem;  
+  }
+
+ 
+
+  button{
+    border: none;
+    border-radius: 2rem;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.2rem;  
+    margin: 0.5rem;
+  }
+
+  button:hover{
+    background-color: rgb(224, 83, 125);
+  }
+
+  .cta-button{
+    background-color: black;
+    font-size: 0.9rem;
+    padding: 20px 42px;
+    align-items: center;
+  }
+
+  .cta-a{
+    color: white;
+  }
+
+  .cta-container{
+    width: 100%;
+    align-items: center;
+  }
+
+ 
+
+  .button{
+      background-color: white;
+  }
+
+  a{
+      color: black;
+      text-decoration: none;
+  }
+
+  p{
+      color: white;
+      line-height: 1.5rem;
+      font-weight: 100;
+
+  }
+
+  h3{
+    text-transform: uppercase;
+    color: white;
+    font-weight: 500;
+    letter-spacing: 0.3rem;
+    line-height: 1.9rem;
+  }
+
+  .container{
+      padding-left: 5rem;
+      padding-right: 5rem;
+      padding-bottom: 3rem;
+      margin: 5rem;
+  }
+
+  img {
+      float: left;
+      clear: left;
+  }
+
+  .inlineLink{
+    color: black;
+    font-weight: 500;
+  }
+  .inlineLink:hover{
+    color: rgb(224, 83, 125);
+  }
+  .musicLink{
+    color: white;
+  }
+  .musicLink:hover{
+    color: rgb(224, 83, 125);
+  }
+
+  .madeBy{
+    text-align: center;
+    letter-spacing: 0.1rem;
+    margin-top: 6rem;
+    margin-bottom: -6rem;
+  }
+
