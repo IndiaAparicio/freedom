@@ -177,18 +177,18 @@ function preload(){
       arrow_up_icon = loadImage('./img/icons/arrow-up.svg');
       arrow_down_icon = loadImage('./img/icons/arrow-down.svg');
 
-      rain_green_icon = loadImage('../img/icons/rain-green.png');
-      rain_red_icon = loadImage('../img/icons/rain-red.png');
-      clouds_green_icon = loadImage('../img/icons/clouds-green.png');
-      isolation_green_icon = loadImage('../img/icons/isolation-green.png');
-      isolation_red_icon = loadImage('../img/icons/isolation-red.png');
-      zoom_green_icon = loadImage('../img/icons/zoom-green.png');
-      zoom_red_icon = loadImage('../img/icons/zoom-red.png');
-      mask_red_icon = loadImage('../img/icons/mask-red.png');
-      mask_green_icon = loadImage('../img/icons/mask-green.png');
-      distancing_red_icon = loadImage('../img/icons/distancing-red.png');
-      distancing_green_icon = loadImage('../img/icons/distancing-green.png');
-      singleContact_green_icon = loadImage('../img/icons/singleContact-green.png');
+      rain_green_icon = loadImage('./img/icons/rain-green.png');
+      rain_red_icon = loadImage('./img/icons/rain-red.png');
+      clouds_green_icon = loadImage('./img/icons/clouds-green.png');
+      isolation_green_icon = loadImage('./img/icons/isolation-green.png');
+      isolation_red_icon = loadImage('./img/icons/isolation-red.png');
+      zoom_green_icon = loadImage('./img/icons/zoom-green.png');
+      zoom_red_icon = loadImage('./img/icons/zoom-red.png');
+      mask_red_icon = loadImage('./img/icons/mask-red.png');
+      mask_green_icon = loadImage('./img/icons/mask-green.png');
+      distancing_red_icon = loadImage('./img/icons/distancing-red.png');
+      distancing_green_icon = loadImage('./img/icons/distancing-green.png');
+      singleContact_green_icon = loadImage('./img/icons/singleContact-green.png');
 
 
   // I M A G E S 
@@ -197,13 +197,13 @@ function preload(){
           docu_bg_img = loadImage('./img/docu_bg.png');
           docu_clouds_img = loadImage('./img/docu_clouds.png');
 
-          intro_1_img = loadImage('../img/intro/intro-1.png');
-          intro_2_img = loadImage('../img/intro/intro-2.png');
-          intro_3_img = loadImage('../img/intro/intro-3.png');
-          intro_4_img = loadImage('../img/intro/intro-4.png');
-          intro_5_img = loadImage('../img/intro/intro-5.png');
-          intro_6_img = loadImage('../img/intro/intro-6.png');
-          intro_7_img = loadImage('../img/intro/intro-7.png');
+          intro_1_img = loadImage('./img/intro/intro-1.png');
+          intro_2_img = loadImage('./img/intro/intro-2.png');
+          intro_3_img = loadImage('./img/intro/intro-3.png');
+          intro_4_img = loadImage('./img/intro/intro-4.png');
+          intro_5_img = loadImage('./img/intro/intro-5.png');
+          intro_6_img = loadImage('./img/intro/intro-6.png');
+          intro_7_img = loadImage('./img/intro/intro-7.png');
 
       //Environment
           clouds_1_img = loadImage("./img/clouds-1.png");
