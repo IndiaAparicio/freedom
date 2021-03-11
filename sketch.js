@@ -150,31 +150,31 @@ let iconGreenClouds;
 function preload(){
 
   // S O U N D S
-      jump_sound = loadSound('../audio/jump.mp3');
-      distancing_sound = loadSound('../audio/swoosh.mp3');
-      singleContact_sound = loadSound('../audio/swoosh.mp3');
-      hygiene_sound = loadSound('../audio/rain.mp3');
-      zoom_sound = loadSound('../audio/electricity.mp3');
-      mask_sound = loadSound('../audio/maske.mp3');
-      teleport_sound = loadSound('../audio/teleport.mp3');
-      button_sound = loadSound('../audio/button.mp3');
+      jump_sound = loadSound('./audio/jump.mp3');
+      distancing_sound = loadSound('./audio/swoosh.mp3');
+      singleContact_sound = loadSound('./audio/swoosh.mp3');
+      hygiene_sound = loadSound('./audio/rain.mp3');
+      zoom_sound = loadSound('./audio/electricity.mp3');
+      mask_sound = loadSound('./audio/maske.mp3');
+      teleport_sound = loadSound('./audio/teleport.mp3');
+      button_sound = loadSound('./audio/button.mp3');
 
-      flyingArea_sound = loadSound('../audio/gone_short_audiohub.mp3');
-      isolationArea_sound = loadSound('../audio/morning-memory-short-audiohub.mp3');
-      middleArea_sound = loadSound('../audio/middleSoundMusic.mp3');
+      flyingArea_sound = loadSound('./audio/gone_short_audiohub.mp3');
+      isolationArea_sound = loadSound('./audio/morning-memory-short-audiohub.mp3');
+      middleArea_sound = loadSound('./audio/middleSoundMusic.mp3');
       
       
   // I C O N S
-      sound_icon = loadImage('../img/icons/volume.svg');
-      sound_hover_icon = loadImage('../img/icons/volume-hover.svg');
-      play_icon = loadImage('../img/icons/play.svg');
-      play_hover_icon = loadImage('../img/icons/play-hover.svg');
-      pause_icon = loadImage('../img/icons/pause.svg');
-      pause_hover_icon = loadImage('../img/icons/pause-hover.svg');
-      zoom_icon = loadImage('../img/icons/zoom.svg');
-      zoom_hover_icon = loadImage('../img/icons/zoom-hover.svg');
-      arrow_up_icon = loadImage('../img/icons/arrow-up.svg');
-      arrow_down_icon = loadImage('../img/icons/arrow-down.svg');
+      sound_icon = loadImage('./img/icons/volume.svg');
+      sound_hover_icon = loadImage('./img/icons/volume-hover.svg');
+      play_icon = loadImage('./img/icons/play.svg');
+      play_hover_icon = loadImage('./img/icons/play-hover.svg');
+      pause_icon = loadImage('./img/icons/pause.svg');
+      pause_hover_icon = loadImage('./img/icons/pause-hover.svg');
+      zoom_icon = loadImage('./img/icons/zoom.svg');
+      zoom_hover_icon = loadImage('./img/icons/zoom-hover.svg');
+      arrow_up_icon = loadImage('./img/icons/arrow-up.svg');
+      arrow_down_icon = loadImage('./img/icons/arrow-down.svg');
 
       rain_green_icon = loadImage('./img/icons/rain-green.png');
       rain_red_icon = loadImage('./img/icons/rain-red.png');
@@ -192,9 +192,9 @@ function preload(){
 
   // I M A G E S 
       //Startingpage
-          docu_img = loadImage('../img/explain.png');
-          docu_bg_img = loadImage('../img/docu_bg.png');
-          docu_clouds_img = loadImage('../img/docu_clouds.png');
+          docu_img = loadImage('./img/explain.png');
+          docu_bg_img = loadImage('./img/docu_bg.png');
+          docu_clouds_img = loadImage('./img/docu_clouds.png');
 
           intro_1_img = loadImage('./img/intro/intro-1.png');
           intro_2_img = loadImage('./img/intro/intro-2.png');
@@ -205,76 +205,76 @@ function preload(){
           intro_7_img = loadImage('./img/intro/intro-7.png');
 
       //Environment
-          clouds_1_img = loadImage("../img/clouds-1.png");
-          clouds_2_img = loadImage("../img/clouds-2.png");
-          clouds_3_img = loadImage("../img/clouds-3.png");
-          clouds_4_img = loadImage("../img/clouds-4.png");
-          clouds_5_img = loadImage("../img/clouds-5.png");
+          clouds_1_img = loadImage("./img/clouds-1.png");
+          clouds_2_img = loadImage("./img/clouds-2.png");
+          clouds_3_img = loadImage("./img/clouds-3.png");
+          clouds_4_img = loadImage("./img/clouds-4.png");
+          clouds_5_img = loadImage("./img/clouds-5.png");
 
-          bg_vorne_1 = loadImage('../img/bg-vorne-1.png');
-          bg_hinten_1 = loadImage('../img/bg-hinten-1.png');
-          bg_vorne_2 = loadImage('../img/bg-vorne-2.png');
-          bg_hinten_2 = loadImage('../img/bg-hinten-2.png');
-          bg_vorne_3 = loadImage('../img/bg-vorne-3.png');
-          bg_hinten_3 = loadImage('../img/bg-hinten-3.png');
-          bg_vorne_4 = loadImage('../img/bg-vorne-4.png');
-          bg_hinten_4 = loadImage('../img/bg-hinten-4.png');
-          bg_vorne_5 = loadImage('../img/bg-vorne-5.png');
-          bg_hinten_5 = loadImage('../img/bg-hinten-5.png');
+          bg_vorne_1 = loadImage('./img/bg-vorne-1.png');
+          bg_hinten_1 = loadImage('./img/bg-hinten-1.png');
+          bg_vorne_2 = loadImage('./img/bg-vorne-2.png');
+          bg_hinten_2 = loadImage('./img/bg-hinten-2.png');
+          bg_vorne_3 = loadImage('./img/bg-vorne-3.png');
+          bg_hinten_3 = loadImage('./img/bg-hinten-3.png');
+          bg_vorne_4 = loadImage('./img/bg-vorne-4.png');
+          bg_hinten_4 = loadImage('./img/bg-hinten-4.png');
+          bg_vorne_5 = loadImage('./img/bg-vorne-5.png');
+          bg_hinten_5 = loadImage('./img/bg-hinten-5.png');
 
-          schnur_Mask_img = loadImage("../img/schnur/schnur-maske-7.png");
-          schnur_img = loadImage("../img/schnur/schnur-7.png");
+          schnur_Mask_img = loadImage("./img/schnur/schnur-maske-7.png");
+          schnur_img = loadImage("./img/schnur/schnur-7.png");
 
-          lights_oben_img = loadImage("../img/lights-oben.png");
-          lights_unten_img = loadImage("../img/lights-unten.png");
-          lights_oben_2_img = loadImage("../img/lights-oben-2.png");
-          lights_unten_2_img = loadImage("../img/lights-unten-2.png");
+          lights_oben_img = loadImage("./img/lights-oben.png");
+          lights_unten_img = loadImage("./img/lights-unten.png");
+          lights_oben_2_img = loadImage("./img/lights-oben-2.png");
+          lights_unten_2_img = loadImage("./img/lights-unten-2.png");
 
 
   //  A N I M A T I O N S
       //Player:
           player1 = createSprite(400,1700);
 
-          player1.addAnimation('player_1_jump_animate', '../img/player/Player-SW-Jump-1.png','../img/player/Player-SW-Jump-11.png');
-          player1.addAnimation('player_1_ground_animate','../img/player/Player-SW-Ground-1.png','../img/player/Player-SW-Ground-11.png');
-          player1.addAnimation('player_1_mask_ground_animate','../img/player/Player-SW-Maske-Ground-1.png','../img/player/Player-SW-Maske-Ground-11.png');
-          player1.addAnimation('player_1_mask_jump_animate','../img/player/Player-SW-Maske-Jump-1.png','../img/player/Player-SW-Maske-Jump-11.png');
+          player1.addAnimation('player_1_jump_animate', './img/player/Player-SW-Jump-1.png','./img/player/Player-SW-Jump-11.png');
+          player1.addAnimation('player_1_ground_animate','./img/player/Player-SW-Ground-1.png','./img/player/Player-SW-Ground-11.png');
+          player1.addAnimation('player_1_mask_ground_animate','./img/player/Player-SW-Maske-Ground-1.png','./img/player/Player-SW-Maske-Ground-11.png');
+          player1.addAnimation('player_1_mask_jump_animate','./img/player/Player-SW-Maske-Jump-1.png','./img/player/Player-SW-Maske-Jump-11.png');
 
-          player1.addAnimation('player_2_jump_animate','../img/player/Player-Ausgeblichen-Jump-1.png','../img/player/Player-Ausgeblichen-Jump-11.png');
-          player1.addAnimation('player_2_ground_animate','../img/player/Player-Ausgeblichen-Ground-1.png','../img/player/Player-Ausgeblichen-Ground-11.png');
-          player1.addAnimation('player_2_mask_jump_animate','../img/player/Player-Ausgeblichen-Maske-Jump-1.png','../img/player/Player-Ausgeblichen-Maske-Jump-11.png');
-          player1.addAnimation('player_2_mask_ground_animate','../img/player/Player-Ausgeblichen-Maske-Ground-1.png','../img/player/Player-Ausgeblichen-Maske-Ground-11.png');
+          player1.addAnimation('player_2_jump_animate','./img/player/Player-Ausgeblichen-Jump-1.png','./img/player/Player-Ausgeblichen-Jump-11.png');
+          player1.addAnimation('player_2_ground_animate','./img/player/Player-Ausgeblichen-Ground-1.png','./img/player/Player-Ausgeblichen-Ground-11.png');
+          player1.addAnimation('player_2_mask_jump_animate','./img/player/Player-Ausgeblichen-Maske-Jump-1.png','./img/player/Player-Ausgeblichen-Maske-Jump-11.png');
+          player1.addAnimation('player_2_mask_ground_animate','./img/player/Player-Ausgeblichen-Maske-Ground-1.png','./img/player/Player-Ausgeblichen-Maske-Ground-11.png');
 
-          player1.addAnimation('player_3_jump_animate','../img/player/Player-Bunt-Jump-1.png','../img/player/Player-Bunt-Jump-11.png');
-          player1.addAnimation('player_3_ground_animate','../img/player/Player-Bunt-Ground-1.png','../img/player/Player-Bunt-Ground-11.png');
-          player1.addAnimation('player_3_mask_jump_animate','../img/player/Player-Bunt-Maske-Jump-1.png','../img/player/Player-Bunt-Maske-Jump-11.png');
-          player1.addAnimation('player_3_mask_ground_animate','../img/player/Player-Bunt-Maske-Ground-1.png','../img/player/Player-Bunt-Maske-Ground-11.png');
+          player1.addAnimation('player_3_jump_animate','./img/player/Player-Bunt-Jump-1.png','./img/player/Player-Bunt-Jump-11.png');
+          player1.addAnimation('player_3_ground_animate','./img/player/Player-Bunt-Ground-1.png','./img/player/Player-Bunt-Ground-11.png');
+          player1.addAnimation('player_3_mask_jump_animate','./img/player/Player-Bunt-Maske-Jump-1.png','./img/player/Player-Bunt-Maske-Jump-11.png');
+          player1.addAnimation('player_3_mask_ground_animate','./img/player/Player-Bunt-Maske-Ground-1.png','./img/player/Player-Bunt-Maske-Ground-11.png');
 
-          player1.addAnimation('player_4_jump_animate','../img/player/Player-Halb-Jump-1.png','../img/player/Player-Halb-Jump-11.png');
-          player1.addAnimation('player_4_ground_animate','../img/player/Player-Halb-Ground-1.png','../img/player/Player-Halb-Ground-11.png');
-          player1.addAnimation('player_4_mask_jump_animate','../img/player/Player-Halb-Maske-Jump-1.png','../img/player/Player-Halb-Maske-Jump-11.png');
-          player1.addAnimation('player_4_mask_ground_animate','../img/player/Player-Halb-Maske-Ground-1.png','../img/player/Player-Halb-Maske-Ground-11.png');
+          player1.addAnimation('player_4_jump_animate','./img/player/Player-Halb-Jump-1.png','./img/player/Player-Halb-Jump-11.png');
+          player1.addAnimation('player_4_ground_animate','./img/player/Player-Halb-Ground-1.png','./img/player/Player-Halb-Ground-11.png');
+          player1.addAnimation('player_4_mask_jump_animate','./img/player/Player-Halb-Maske-Jump-1.png','./img/player/Player-Halb-Maske-Jump-11.png');
+          player1.addAnimation('player_4_mask_ground_animate','./img/player/Player-Halb-Maske-Ground-1.png','./img/player/Player-Halb-Maske-Ground-11.png');
 
-          player1.addAnimation('player_5_jump_animate','../img/player/Player-Detail-Jump-1.png','../img/player/Player-Detail-Jump-11.png');
-          player1.addAnimation('player_5_ground_animate','../img/player/Player-Detail-Ground-1.png','../img/player/Player-Detail-Ground-11.png');
-          player1.addAnimation('player_5_mask_jump_animate','../img/player/Player-Detail-Maske-Jump-1.png','../img/player/Player-Detail-Maske-Jump-11.png');
-          player1.addAnimation('player_5_mask_ground_animate','../img/player/Player-Detail-Maske-Ground-1.png','../img/player/Player-Detail-Maske-Ground-11.png');
+          player1.addAnimation('player_5_jump_animate','./img/player/Player-Detail-Jump-1.png','./img/player/Player-Detail-Jump-11.png');
+          player1.addAnimation('player_5_ground_animate','./img/player/Player-Detail-Ground-1.png','./img/player/Player-Detail-Ground-11.png');
+          player1.addAnimation('player_5_mask_jump_animate','./img/player/Player-Detail-Maske-Jump-1.png','./img/player/Player-Detail-Maske-Jump-11.png');
+          player1.addAnimation('player_5_mask_ground_animate','./img/player/Player-Detail-Maske-Ground-1.png','./img/player/Player-Detail-Maske-Ground-11.png');
           
 
       //Distancing
-          distancing_1_img = loadImage('../img/Distancing/Distancing-SW-2.png');
-          distancing_2_col1_img = loadImage('../img/Distancing/Distancing-Ausgeblichen-ColorA-2.png');
-          distancing_2_col2_img = loadImage('../img/Distancing/Distancing-Ausgeblichen-ColorB-2.png');
-          distancing_2_col3_img = loadImage('../img/Distancing/Distancing-Ausgeblichen-ColorC-2.png');
-          distancing_3_col1_img = loadImage('../img/Distancing/Distancing-Bunt-ColorA-2.png');
-          distancing_3_col3_img = loadImage('../img/Distancing/Distancing-Bunt-ColorB-2.png');
-          distancing_3_col3_img = loadImage('../img/Distancing/Distancing-Bunt-ColorC-2.png');
-          distancing_4_col1_img = loadImage('../img/Distancing/Distancing-Halb-ColorA-2.png');
-          distancing_4_col2_img = loadImage('../img/Distancing/Distancing-Halb-ColorB-2.png');
-          distancing_4_col3_img = loadImage('../img/Distancing/Distancing-Halb-ColorC-2.png');
-          distancing_5_col1_img = loadImage('../img/Distancing/Distancing-Detail-ColorA-2.png');
-          distancing_5_col2_img = loadImage('../img/Distancing/Distancing-Detail-ColorB-2.png');
-          distancing_5_col3_img = loadImage('../img/Distancing/Distancing-Detail-ColorC-2.png');
+          distancing_1_img = loadImage('./img/Distancing/Distancing-SW-2.png');
+          distancing_2_col1_img = loadImage('./img/Distancing/Distancing-Ausgeblichen-ColorA-2.png');
+          distancing_2_col2_img = loadImage('./img/Distancing/Distancing-Ausgeblichen-ColorB-2.png');
+          distancing_2_col3_img = loadImage('./img/Distancing/Distancing-Ausgeblichen-ColorC-2.png');
+          distancing_3_col1_img = loadImage('./img/Distancing/Distancing-Bunt-ColorA-2.png');
+          distancing_3_col3_img = loadImage('./img/Distancing/Distancing-Bunt-ColorB-2.png');
+          distancing_3_col3_img = loadImage('./img/Distancing/Distancing-Bunt-ColorC-2.png');
+          distancing_4_col1_img = loadImage('./img/Distancing/Distancing-Halb-ColorA-2.png');
+          distancing_4_col2_img = loadImage('./img/Distancing/Distancing-Halb-ColorB-2.png');
+          distancing_4_col3_img = loadImage('./img/Distancing/Distancing-Halb-ColorC-2.png');
+          distancing_5_col1_img = loadImage('./img/Distancing/Distancing-Detail-ColorA-2.png');
+          distancing_5_col2_img = loadImage('./img/Distancing/Distancing-Detail-ColorB-2.png');
+          distancing_5_col3_img = loadImage('./img/Distancing/Distancing-Detail-ColorC-2.png');
 
 }// end Preload
 
@@ -402,21 +402,21 @@ function setup() {
               s1 = createSprite(random(SCENE_W)-(SCENE_W/2),heightSinglePerson,200,100);
               s1.friction = random(0.001, 0.05);
               s1.maxSpeed = 12;
-              s1.addAnimation('singleContact_1_R_animate', '../img/SingleContact/SingleContact-SW-R-1.png','../img/SingleContact/SingleContact-SW-R-10.png');
-              s1.addAnimation('singleContact_2_R_animate', '../img/SingleContact/SingleContact-Verblichen-R-1.png','../img/SingleContact/SingleContact-Verblichen-R-10.png');
-              s1.addAnimation('singleContact_3_R_animate', '../img/SingleContact/SingleContact-Bunt-R-1.png','../img/SingleContact/SingleContact-Bunt-R-10.png');
-              s1.addAnimation('singleContact_4_R_animate', '../img/SingleContact/SingleContact-Halb-R-1.png','../img/SingleContact/SingleContact-Halb-R-10.png');
-              s1.addAnimation('singleContact_5_R_animate', '../img/SingleContact/SingleContact-Detail-R-1.png','../img/SingleContact/SingleContact-Detail-R-10.png');
+              s1.addAnimation('singleContact_1_R_animate', './img/SingleContact/SingleContact-SW-R-1.png','./img/SingleContact/SingleContact-SW-R-10.png');
+              s1.addAnimation('singleContact_2_R_animate', './img/SingleContact/SingleContact-Verblichen-R-1.png','./img/SingleContact/SingleContact-Verblichen-R-10.png');
+              s1.addAnimation('singleContact_3_R_animate', './img/SingleContact/SingleContact-Bunt-R-1.png','./img/SingleContact/SingleContact-Bunt-R-10.png');
+              s1.addAnimation('singleContact_4_R_animate', './img/SingleContact/SingleContact-Halb-R-1.png','./img/SingleContact/SingleContact-Halb-R-10.png');
+              s1.addAnimation('singleContact_5_R_animate', './img/SingleContact/SingleContact-Detail-R-1.png','./img/SingleContact/SingleContact-Detail-R-10.png');
               singlepeople.add(s1);
 
               s2 = createSprite(random(SCENE_W)-(SCENE_W/2),heightSinglePerson,200,100);
               s2.friction = random(0.001, 0.03);
               s2.maxSpeed = 12;
-              s2.addAnimation('singleContact_1_L_animate', '../img/SingleContact/SingleContact-SW-L-1.png','../img/SingleContact/SingleContact-SW-L-10.png');
-              s2.addAnimation('singleContact_2_L_animate', '../img/SingleContact/SingleContact-Verblichen-L-1.png','../img/SingleContact/SingleContact-Verblichen-L-10.png');
-              s2.addAnimation('singleContact_3_L_animate', '../img/SingleContact/SingleContact-Bunt-L-1.png','../img/SingleContact/SingleContact-Bunt-L-10.png');
-              s2.addAnimation('singleContact_4_L_animate', '../img/SingleContact/SingleContact-Halb-L-1.png','../img/SingleContact/SingleContact-Halb-L-10.png');
-              s2.addAnimation('singleContact_5_L_animate', '../img/SingleContact/SingleContact-Detail-L-1.png','../img/SingleContact/SingleContact-Detail-L-10.png');
+              s2.addAnimation('singleContact_1_L_animate', './img/SingleContact/SingleContact-SW-L-1.png','./img/SingleContact/SingleContact-SW-L-10.png');
+              s2.addAnimation('singleContact_2_L_animate', './img/SingleContact/SingleContact-Verblichen-L-1.png','./img/SingleContact/SingleContact-Verblichen-L-10.png');
+              s2.addAnimation('singleContact_3_L_animate', './img/SingleContact/SingleContact-Bunt-L-1.png','./img/SingleContact/SingleContact-Bunt-L-10.png');
+              s2.addAnimation('singleContact_4_L_animate', './img/SingleContact/SingleContact-Halb-L-1.png','./img/SingleContact/SingleContact-Halb-L-10.png');
+              s2.addAnimation('singleContact_5_L_animate', './img/SingleContact/SingleContact-Detail-L-1.png','./img/SingleContact/SingleContact-Detail-L-10.png');
               singlepeople2.add(s2);
         
 
