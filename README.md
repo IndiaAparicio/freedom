@@ -9,3 +9,5 @@ You can find the documentation of the project [here](https://github.com/IndiaApa
 You can find the presentation [here](https://github.com/IndiaAparicio/freedomGame/blob/master/documentations/presentations/final-presentation.pdf)
 
 I have [another repository](https://github.com/IndiaAparicio/freedomGame) that serves as the documenting repository of the entire project. It contains all documentation, lists, texts, presentations, intermediate statuses and discarded files.
+
+If you want to see the demo of the game, you can download the files [here](https://we.tl/t-MrsRmi41Hg)
