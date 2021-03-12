@@ -17,6 +17,7 @@ let intro_6 = false;
 let intro_7 = false;
 let mouseClickCheck = true; // StartingPage
 let mouseClickCheck2 = true; // StartingPage
+let myfont;
 
 //player
 let player1;
@@ -149,6 +150,7 @@ let iconGreenClouds;
 
 function preload(){
 
+  myfont = loadFont('../font/Roboto-Light.ttf');
   // S O U N D S
       jump_sound = loadSound('../audio/jump.mp3');
       distancing_sound = loadSound('../audio/swoosh.mp3');
@@ -483,7 +485,7 @@ function draw() {
         background(docu_bg_img);
       
         fill(255);
-        textFont('Avenir');
+        textFont(myfont);
         textAlign(CENTER);
         textSize(windowHeight/4);
         text("FREEDOM", windowWidth/2,windowHeight/2);
@@ -1829,7 +1831,7 @@ function tutorial(){
 
       background(docu_bg_img);
 
-      textFont('Avenir');
+      textFont(myfont);
       textAlign(CENTER);
       imageMode(CENTER);
       rectMode(CENTER);
@@ -1926,7 +1928,7 @@ function tutorial(){
       }else if(intro_2){
         tutorialSinglePage(intro_2_img, "In the sky you can fly and meet groups of people.","2/7 \nClick to continue");
       }else if(intro_3){
-        tutorialSinglePage(intro_3_img, "In the neutral zone, your mask is located, \n individuals with masks walk along and a digital media screen is located in the center.","3/7 \nClick to continue");
+        tutorialSinglePage(intro_3_img, "In the neutral zone you will find your mask, \n where individuals with masks walk along. \n A digital media screen is located in the center.","3/7 \nClick to continue");
       }else if(intro_4){
         tutorialSinglePage(intro_4_img, "You are alone in your home. Here you will also find a digital media area.","4/7 \nClick to continue");
       }else if(intro_5){
