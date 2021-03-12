@@ -150,7 +150,7 @@ let iconGreenClouds;
 
 function preload(){
 
-  myfont = loadFont('../font/Roboto-Light.ttf');
+  myfont = loadFont('./font/Roboto-Light.ttf');
   // S O U N D S
       jump_sound = loadSound('./audio/jump.mp3');
       distancing_sound = loadSound('./audio/swoosh.mp3');
